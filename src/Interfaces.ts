@@ -1,8 +1,16 @@
 export interface Category {
-  category_id: string;
+  category_id: number;
   category_name: string;
 }
 
+export interface Stream {
+  num: number;
+  name: string;
+  stream_type: string;
+  stream_id: string;
+  stream_icon: string;
+  category_id: number;
+}
 export enum Actions {
   getLiveCategories = "get_live_categories",
   getLiveStreams = "get_live_streams",

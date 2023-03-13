@@ -2,15 +2,12 @@ import { ReactNode, useEffect, useState } from "react";
 import axios from "axios";
 import {
   AppShell,
-  Center,
-  Container,
-  Flex,
   Footer,
-  Grid,
   Group,
   Header,
   NavLink,
   Text,
+  Title,
 } from "@mantine/core";
 import {
   IconDeviceTv,
@@ -18,56 +15,14 @@ import {
   IconBrandNetflix,
   IconSettings,
 } from "@tabler/icons-react";
-import Player from "./player";
 import SettingsPanel from "./settingsPanel";
-import { Authentication, store } from "./store";
+import { store } from "./store";
 import { useSnapshot } from "valtio";
-import { Actions, Category } from "./Interfaces";
-import CategoryMembersCardView from "./CategoyMembersCardView";
-import LiveTVPanel from "./liveTVPanel";
-import { render } from "react-dom";
-
-const getCategory = async (login: Authentication, action: Actions) => {
-  const { username, password, url } = login;
-  const response = await axios.get(
-    `${url}/player_api.php?username=${username}&password=${password}&action=${action}`
-  );
-  return response.data;
-};
+import MainPanel from "./mainPanel";
 
 function App() {
   const [selectedPanel, setSelectedPanel] = useState<ReactNode>(<></>);
   const snap = useSnapshot(store);
-  const [categories, setCategories] = useState<{
-    LiveTv: Category[];
-    Movies: Category[];
-    Series: Category[];
-  }>({ LiveTv: [], Movies: [], Series: [] });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!snap.authentication) return;
-      const cattv = await getCategory(
-        snap.authentication,
-        Actions.getLiveCategories
-      );
-      const catmovie = await getCategory(
-        snap.authentication,
-        Actions.getVodCategories
-      );
-      const catseries = await getCategory(
-        snap.authentication,
-        Actions.getSeriesCategories
-      );
-      setCategories({
-        LiveTv: cattv,
-        Movies: catmovie,
-        Series: catseries,
-      });
-    };
-    fetchData();
-    console.log(snap.authentication);
-  }, [snap.authentication]);
 
   return (
     <AppShell
@@ -75,26 +30,15 @@ function App() {
       header={
         <Header height={70} withBorder>
           <Group spacing="xs" position="left" p="xs" noWrap>
-            <Center miw={125}>
-              <div>
-                <Text
-                  variant="gradient"
-                  gradient={{ from: "blue.5", to: "indigo.5", deg: 90 }}
-                  fz="lg"
-                  fw={700}
-                >
-                  Yet another
-                </Text>
-                <Text
-                  variant="gradient"
-                  gradient={{ from: "indigo.5", to: "blue.5", deg: 90 }}
-                  fz="lg"
-                  fw={700}
-                >
-                  IPTV Client
-                </Text>
-              </div>
-            </Center>
+            <Title
+              style={{ whiteSpace: "nowrap" }}
+              order={2}
+              variant="gradient"
+              gradient={{ from: "blue.2", to: "blue.6", deg: 180 }}
+            >
+              Yet another IPTV Client
+            </Title>
+
             <NavLink
               noWrap
               w="auto"
@@ -102,7 +46,7 @@ function App() {
               active
               label="Canlı TV"
               icon={<IconDeviceTv stroke="1.5" />}
-              onClick={() => setSelectedPanel(<LiveTVPanel />)}
+              onClick={() => setSelectedPanel(<MainPanel parent="Live TV" />)}
             />
             <NavLink
               w="auto"
@@ -110,6 +54,7 @@ function App() {
               active
               label="Filmler"
               icon={<IconMovie stroke="1.5" />}
+              onClick={() => setSelectedPanel(<MainPanel parent="Movies" />)}
             />
             <NavLink
               w="auto"
@@ -117,6 +62,7 @@ function App() {
               active
               label="Diziler"
               icon={<IconBrandNetflix stroke="1.5" />}
+              onClick={() => setSelectedPanel(<MainPanel parent="Series" />)}
             />
             <NavLink
               w="auto"
@@ -149,9 +95,8 @@ function App() {
           </Group>
         </Footer>
       }
-      layout="default"
     >
-      <Container fluid>{selectedPanel}</Container>
+      <>{selectedPanel}</>
     </AppShell>
   );
 }

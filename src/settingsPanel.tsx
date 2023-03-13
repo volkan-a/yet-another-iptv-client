@@ -8,17 +8,14 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { useForm, UseFormReturnType } from "@mantine/form";
 import { store } from "./store";
 import axios from "axios";
+
 const SettingsPanel = () => {
   const form = useForm({
-    initialValues: {
-      username: "volkana122",
-      password: "volkana125346233",
-      url: "http://iptvuniversal.eu:80",
-      pin: "0822",
-    },
+    initialValues: { ...JSON.parse(localStorage.getItem("authentication")!) },
+
     validate: {
       username: (value) => {
         if (!value) return "Kullanıcı adı boş olamaz";
@@ -33,19 +30,16 @@ const SettingsPanel = () => {
   });
 
   const onSubmit = async (values: any) => {
-    console.log(values);
     const url = `${values.url}/player_api.php?username=${values.username}&password=${values.password}`;
     const res = await axios.get(url);
     const data = res.data;
-    console.log(data);
     if (data.user_info.status === "Active") {
       var date = new Date(data.user_info.exp_date * 1000);
 
       store.authentication = { ...values, expires: date.toUTCString() };
     } else {
-      alert("Kullanıcı adı veya şifre hatalı");
+      alert("Kullanıcı adı şifre veya url hatalı");
     }
-    // store.login = values;
   };
 
   return (
@@ -64,6 +58,7 @@ const SettingsPanel = () => {
           <TextInput
             withAsterisk
             label="Şifre"
+            type="password"
             {...form.getInputProps("password")}
             mb="sm"
           />

@@ -1,4 +1,4 @@
-import { proxy } from "valtio";
+import { proxy, subscribe } from "valtio";
 
 export interface Authentication {
   username: string;
@@ -7,6 +7,13 @@ export interface Authentication {
   expires: number;
 }
 
-export const store = proxy<{ authentication: Authentication | null }>({
-  authentication: null,
+export const store = proxy<{ authentication: Authentication }>(
+  JSON.parse(localStorage.getItem("authentication")) || {
+    authentication: { username: "", password: "", url: "", expires: 0 },
+  }
+);
+
+subscribe(store, (state) => {
+  console.log("state changed", state);
+  localStorage.setItem("authentication", JSON.stringify(store.authentication));
 });
