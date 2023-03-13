@@ -17,6 +17,8 @@ const Player = () => {
     let player: Plyr = ref.current.plyr;
     player.fullscreen.enter();
     player.playing ? player.pause() : player.play();
+    window.MediaSource = window.MediaSource || window.WebKitMediaSource;
+    MediaSource.
   };
   return (
     <Stack p="xs">
@@ -31,8 +33,11 @@ const Player = () => {
           type: "video",
           sources: [
             {
-              src: "http://iptvuniversal.eu:80/volkana122/volkana125346233/89",
+              // src: "http://iptvuniversal.eu:80/movie/volkana122/volkana125346233/186675.mkv",
+              src: "http://iptvuniversal.eu:80/volkana122/volkana125346233/84",
               type: "application/x-mpegURL",
+              // type: 'application/x-mpegURL; codecs="avc1.4d001e, mp4a.40.2"',
+              // type: "application/x-matroska",
               provider: "html5",
               size: 240,
             },
