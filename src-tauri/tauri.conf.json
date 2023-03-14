@@ -48,8 +48,16 @@
         "fullscreen": false,
         "resizable": true,
         "title": "Yet another IPTV client",
-        "width": 800,
-        "height": 600
+        "width": 1024,
+        "height": 768,
+        "visible": false
+      },
+      {
+        "height": 400,
+        "width": 363,
+        "decorations": false,
+        "url": "splashscreen.html",
+        "label": "splashscreen"
       }
     ]
   }

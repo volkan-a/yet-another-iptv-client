@@ -18,10 +18,11 @@ import useStyles from "./styles";
 interface StreamListProps {
   parent: "Live TV" | "Movies" | "Series";
   streams: Stream[];
+  onStreamChange: (stream_id: string) => void;
 }
 
 const StreamList = (props: StreamListProps) => {
-  const { parent, streams } = props;
+  const { parent, streams, onStreamChange } = props;
   const { classes, theme } = useStyles();
   const [avatar, setAvatar] = useState("");
 
@@ -32,7 +33,7 @@ const StreamList = (props: StreamListProps) => {
           h={80}
           key={stream.stream_id}
           className={classes.button}
-          onClick={() => {}}
+          onClick={() => onStreamChange(stream.stream_id)}
           pt={4}
           pb={4}
         >
