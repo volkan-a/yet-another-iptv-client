@@ -13,9 +13,10 @@ const CategoryList = (props: CategoryMemberListProps) => {
   const [avatar, setAvatar] = useState("");
   const { classes, theme } = useStyles();
   return (
-    <Stack spacing={1}>
+    <Stack spacing={4}>
       {categories.map((cat) => (
         <UnstyledButton
+          h={60}
           key={cat.category_id}
           className={classes.button}
           onClick={() => onCategoryChange(cat.category_id)}

@@ -35,9 +35,7 @@
       ],
       "identifier": "com.thermoproc.yaic",
       "targets": "all",
-      "macOS": {
-        "entitlements": "entitlements.macOS.plist"
-      }
+      "macOS": {}
     },
     "security": {
       "csp": ""

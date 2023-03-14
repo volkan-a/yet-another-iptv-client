@@ -2,16 +2,16 @@ import { createStyles } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
   button: {
-    backgroundColor: theme.colors.dark[8],
+    backgroundColor: theme.colors.dark[6],
     color: theme.colors.dark[0],
     padding: theme.spacing.xs,
     borderColor: theme.colors.dark[6],
     ":hover": {
-      backgroundColor: theme.colors.dark[6],
+      backgroundColor: theme.colors.dark[8],
     },
     ":active": {
-      backgroundColor: theme.colors.dark[8],
-      transition: "background-color 150ms ease",
+      backgroundColor: theme.colors.dark[6],
+      transition: "background-color 200ms ease",
     },
   },
   channelText: {},

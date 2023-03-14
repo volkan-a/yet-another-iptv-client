@@ -26,19 +26,24 @@ const StreamList = (props: StreamListProps) => {
   const [avatar, setAvatar] = useState("");
 
   return (
-    <Stack spacing={0}>
+    <Stack spacing={4}>
       {streams.map((stream) => (
         <UnstyledButton
+          h={80}
           key={stream.stream_id}
           className={classes.button}
           onClick={() => {}}
-          pt={1}
-          pb={1}
+          pt={4}
+          pb={4}
         >
           <Group noWrap>
             <Image
-              src={stream.stream_icon !== "" ? stream.stream_icon : TVIcon}
-              height={80}
+              src={
+                stream.stream_icon && stream.stream_icon !== ""
+                  ? stream.stream_icon
+                  : TVIcon
+              }
+              height={72}
               width={100}
               fit="scale-down"
             />

@@ -21,7 +21,9 @@ import { useSnapshot } from "valtio";
 import MainPanel from "./mainPanel";
 
 function App() {
-  const [selectedPanel, setSelectedPanel] = useState<ReactNode>(<></>);
+  const [selectedPanel, setSelectedPanel] = useState<ReactNode>(
+    <MainPanel parent="Live TV" />
+  );
   const snap = useSnapshot(store);
 
   return (

@@ -19,7 +19,7 @@ const MainPanel = (props: CategoryPanelProps) => {
   const [streams, setStreams] = useState<Stream[]>([]);
 
   useEffect(() => {
-    if (snap.authentication === null) return;
+    // if (snap.authentication === null) return;
     let action: Actions;
     switch (parent) {
       case "Live TV":
@@ -44,6 +44,11 @@ const MainPanel = (props: CategoryPanelProps) => {
     };
     fetchCategories();
   }, [parent]);
+
+  useEffect(() => {
+    if (categories.length === 0) return;
+    handleCategoryChange(categories[0].category_id);
+  }, [categories]);
 
   const handleCategoryChange = (category_id: number) => {
     let action: Actions;
@@ -72,7 +77,6 @@ const MainPanel = (props: CategoryPanelProps) => {
       });
     };
     fetchStreams();
-    console.log(streams);
   };
 
   return snap.authentication ? (
