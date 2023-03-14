@@ -7,13 +7,15 @@ export interface Authentication {
   expires: number;
 }
 
-export const store = proxy<{ authentication: Authentication }>(
-  JSON.parse(localStorage.getItem("authentication")) || {
-    authentication: { username: "", password: "", url: "", expires: 0 },
-  }
-);
+export const store = proxy<{
+  authentication: Authentication | null;
+  vlcPath: string | null;
+}>({
+  authentication: JSON.parse(localStorage.getItem("authentication")!),
+  vlcPath: localStorage.getItem("vlcPath"),
+});
 
 subscribe(store, (state) => {
-  console.log("state changed", state);
   localStorage.setItem("authentication", JSON.stringify(store.authentication));
+  localStorage.setItem("vlcPath", store.vlcPath!);
 });

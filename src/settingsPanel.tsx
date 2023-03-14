@@ -1,6 +1,8 @@
 import {
   Button,
   Center,
+  FileButton,
+  FileInput,
   Group,
   Paper,
   PinInput,
@@ -8,13 +10,20 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import { useForm, UseFormReturnType } from "@mantine/form";
+import { useForm } from "@mantine/form";
 import { store } from "./store";
 import axios from "axios";
+import { useState } from "react";
 
 const SettingsPanel = () => {
+  const [file, setFile] = useState<File | null>();
   const form = useForm({
-    initialValues: { ...JSON.parse(localStorage.getItem("authentication")!) },
+    initialValues: {
+      username: store.authentication?.username || "",
+      password: store.authentication?.password || "",
+      url: store.authentication?.url || "",
+      vlcPath: store.vlcPath || "",
+    },
 
     validate: {
       username: (value) => {
@@ -30,6 +39,7 @@ const SettingsPanel = () => {
   });
 
   const onSubmit = async (values: any) => {
+    console.log(form.values);
     const url = `${values.url}/player_api.php?username=${values.username}&password=${values.password}`;
     const res = await axios.get(url);
     const data = res.data;
@@ -37,9 +47,16 @@ const SettingsPanel = () => {
       var date = new Date(data.user_info.exp_date * 1000);
 
       store.authentication = { ...values, expires: date.toUTCString() };
+      store.vlcPath = values.vlcPath;
     } else {
       alert("Kullanıcı adı şifre veya url hatalı");
     }
+  };
+
+  const resetSettings = () => {
+    localStorage.removeItem("authentication");
+    store.authentication = null;
+    form.reset();
   };
 
   return (
@@ -68,6 +85,18 @@ const SettingsPanel = () => {
             {...form.getInputProps("url")}
             mb="sm"
           />
+          <FileButton onChange={setFile}>
+            {(props) => (
+              <TextInput
+                label="VLC yolu"
+                mb="sm"
+                readOnly
+                value={file?.name || ""}
+                {...props}
+              />
+            )}
+          </FileButton>
+
           <Center mb="sm">
             <PinInput
               size="xl"
@@ -77,6 +106,14 @@ const SettingsPanel = () => {
             />
           </Center>
           <Group position="right">
+            <Button
+              type="reset"
+              variant="outline"
+              onClick={resetSettings}
+              c="t"
+            >
+              Sıfırla
+            </Button>
             <Button type="submit" variant="outline" c="t">
               Kaydet
             </Button>

@@ -7,8 +7,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "tauri-iptv",
-    "version": "0.0.0"
+    "productName": "yet-another-iptv-client",
+    "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
@@ -33,8 +33,11 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
-      "targets": "all"
+      "identifier": "com.thermoproc.yaic",
+      "targets": "all",
+      "macOS": {
+        "entitlements": "entitlements.macOS.plist"
+      }
     },
     "security": {
       "csp": ""
@@ -46,7 +49,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "tauri-iptv",
+        "title": "Yet another IPTV client",
         "width": 800,
         "height": 600
       }

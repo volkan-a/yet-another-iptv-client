@@ -4,28 +4,12 @@ import "plyr-react/plyr.css";
 import { Text, Button, Group, Stack } from "@mantine/core";
 
 const Player = () => {
-  const ref = useRef();
-  const [bufferText, setBufferText] = useState("Buffering...");
-  // set buffertext is playing
+  const ref = useRef(null);
+  // set player as type Plyr
+  // let player: Plyr = ref.current.plyr;
 
-  const playOrPause = () => {
-    // if (ref.current.plyr.playing) {
-    //   ref.current.plyr.pause();
-    // } else {
-    //   ref.current.plyr.play();
-    // }
-    let player: Plyr = ref.current.plyr;
-    player.fullscreen.enter();
-    player.playing ? player.pause() : player.play();
-    window.MediaSource = window.MediaSource || window.WebKitMediaSource;
-    MediaSource.
-  };
   return (
     <Stack p="xs">
-      <Group>
-        <Button onClick={playOrPause}>Pause</Button>
-        <Text>{bufferText}</Text>
-      </Group>
       <Plyr
         ref={ref}
         autoPlay
@@ -39,7 +23,6 @@ const Player = () => {
               // type: 'application/x-mpegURL; codecs="avc1.4d001e, mp4a.40.2"',
               // type: "application/x-matroska",
               provider: "html5",
-              size: 240,
             },
           ],
         }}

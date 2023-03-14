@@ -1,13 +1,11 @@
 import { Grid, ScrollArea, Skeleton, Stack, Text } from "@mantine/core";
 import axios from "axios";
-import { retro } from "manthemes/daisyui";
-import { useEffect, useMemo, useState } from "react";
-import { useEffectOnce } from "usehooks-ts";
+import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 import CategoryList from "./categoryList";
 import { Actions, Category, Stream } from "./Interfaces";
 import Player from "./player";
-import { Authentication, store } from "./store";
+import { store } from "./store";
 import StreamList from "./streamList";
 
 interface CategoryPanelProps {
@@ -21,6 +19,7 @@ const MainPanel = (props: CategoryPanelProps) => {
   const [streams, setStreams] = useState<Stream[]>([]);
 
   useEffect(() => {
+    if (snap.authentication === null) return;
     let action: Actions;
     switch (parent) {
       case "Live TV":
@@ -34,7 +33,10 @@ const MainPanel = (props: CategoryPanelProps) => {
         break;
     }
     const fetchCategories = async () => {
-      const { username, password, url, ...rest } = snap.authentication;
+      if (snap.authentication === null) return;
+      const username = snap.authentication.username;
+      const password = snap.authentication.password;
+      const url = snap.authentication.url;
       const response = await axios.get(
         `${url}/player_api.php?username=${username}&password=${password}&action=${action}`
       );
@@ -57,7 +59,10 @@ const MainPanel = (props: CategoryPanelProps) => {
         break;
     }
     const fetchStreams = async () => {
-      const { username, password, url, ...rest } = snap.authentication;
+      if (snap.authentication === null) return;
+      const username = snap.authentication.username;
+      const password = snap.authentication.password;
+      const url = snap.authentication.url;
       const response = await axios.get(
         `${url}/player_api.php?username=${username}&password=${password}&action=${action}&category_id=${category_id}`
       );
