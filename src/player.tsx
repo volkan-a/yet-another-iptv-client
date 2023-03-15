@@ -11,6 +11,7 @@ const Player = (props: { streamId: string }) => {
     [
       "f",
       () => {
+        /* eslint-disable-next-line */
         ref.current?.plyr.fullscreen.toggle();
       },
     ],
