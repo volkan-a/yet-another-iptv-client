@@ -1,8 +1,6 @@
 import {
   Button,
   Center,
-  FileButton,
-  FileInput,
   Group,
   Modal,
   Paper,
@@ -12,6 +10,7 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
+import { open as tOpen } from "@tauri-apps/api/dialog";
 import { useForm } from "@mantine/form";
 import { store } from "./store";
 import axios from "axios";
@@ -127,17 +126,6 @@ const SettingsPanel = () => {
                 {...form.getInputProps("url")}
                 mb="sm"
               />
-              <FileButton onChange={setFile}>
-                {(props) => (
-                  <TextInput
-                    label="VLC yolu"
-                    mb="sm"
-                    readOnly
-                    value={file?.name || ""}
-                    {...props}
-                  />
-                )}
-              </FileButton>
 
               <Center mb="sm">
                 <PinInput
@@ -147,6 +135,23 @@ const SettingsPanel = () => {
                   {...form.getInputProps("pin")}
                 />
               </Center>
+
+              <Group grow>
+                <TextInput
+                  onClick={async (e) => {
+                    const selected = await tOpen({
+                      multiple: false,
+                      title: "VLC çalıştırılabilir dosyasını seçin",
+                    });
+                    if (selected !== null && !Array.isArray(selected))
+                      store.vlcPath = selected;
+                  }}
+                  readOnly
+                  label="VLC Yolu"
+                  mb="sm"
+                  value={store.vlcPath || ""}
+                />
+              </Group>
               <Group position="right">
                 <Button
                   type="reset"

@@ -11,11 +11,11 @@ jobs:
       fail-fast: false
       matrix:
         settings:
-          - platform: "macos-latest-universal"
+          - platform: "macos-latest"
             args: "--target universal-apple-darwin"
-          - platform: "macos-latest-x86_64"
+          - platform: "macos-latest"
             args: "--target x86_64-apple-darwin"
-          - platform: "macos-latest-aarch64"
+          - platform: "macos-latest"
             args: "--target aarch64-apple-darwin"
           - platform: "ubuntu-20.04"
             args: ""
@@ -30,6 +30,8 @@ jobs:
           node-version: 16
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
       - name: install dependencies (ubuntu only)
         if: matrix.settings.platform == 'ubuntu-20.04'
         run: |
@@ -45,4 +47,4 @@ jobs:
           releaseName: "App v__VERSION__"
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
-          prerelease: true
+          prerelease: false
