@@ -12,11 +12,11 @@ jobs:
       fail-fast: false
       matrix:
         settings:
-          - platform: 'macos-latest'
+          - platform: 'macos-latest-universal'
             args: '--target universal-apple-darwin'
-          - platform: 'macos-latest'
+          - platform: 'macos-latest-x86_64'
             args: '--target x86_64-apple-darwin'
-          - platform: 'macos-latest'
+          - platform: 'macos-latest-aarch64'
             args: '--target aarch64-apple-darwin'
           - platform: 'ubuntu-20.04'
             args: ''
