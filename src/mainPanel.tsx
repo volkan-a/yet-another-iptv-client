@@ -1,5 +1,4 @@
 import { Grid, ScrollArea, Skeleton, Stack, Text } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
 import { useHotkeys } from "@mantine/hooks";
 import axios from "axios";
 import { useEffect, useState } from "react";

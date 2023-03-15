@@ -18,6 +18,7 @@ const Player = (props: { streamId: string }) => {
 
   useEffect(() => {
     if (ref.current === null) return;
+    console.log(typeof ref.current);
   }, [streamId]);
 
   return (
