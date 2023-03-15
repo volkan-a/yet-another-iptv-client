@@ -6,12 +6,11 @@ import { useHotkeys } from "@mantine/hooks";
 
 const Player = (props: { streamId: string }) => {
   const { streamId } = props;
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
   useHotkeys([
     [
       "f",
       () => {
-        /* eslint-disable-next-line */
         ref.current?.plyr.fullscreen.toggle();
       },
     ],
