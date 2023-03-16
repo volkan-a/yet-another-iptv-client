@@ -41,16 +41,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        - platform: macos-latest
-          arch: aarch64
-        - platform: macos-latest
-          arch: x86_64
-        - plaform: ubuntu-20.04
-          arch: x86_64
-        - plaform: ubuntu-20.04
-          arch: arm64
-        - platform: windows-latest
-          arch: x86_64
+        include:
+          - platform: macos-latest
+            arch: aarch64
+          - platform: macos-latest
+            arch: x86_64
+          - plaform: ubuntu-20.04
+            arch: x86_64
+          - plaform: ubuntu-20.04
+            arch: arm64
+          - platform: windows-latest
+            arch: x86_64
 
     runs-on: ${{ matrix.platform }}
     steps:
