@@ -5,7 +5,7 @@ on:
       - "release"
 
 jobs:
-  release:
+  create-release:
     strategy:
       fail-fast: false
       matrix:
