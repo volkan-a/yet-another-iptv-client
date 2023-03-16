@@ -10,12 +10,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        platform: [macos-latest, ubuntu-lates, windows-latest]
         include:
           - platform: macos-latest
             arch: aarch64
-          - plaform: ubuntu-latest
-          - platform: windows-latest
-          
+
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout repository
