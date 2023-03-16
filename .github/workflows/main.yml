@@ -1,19 +1,25 @@
-name: Release
+name: "Release"
 on:
   push:
-    tags:
-      - "v*"
-  workflow_dispatch:
+    branches:
+      - "release"
 
 jobs:
   release:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
         include:
           - platform: macos-latest
             arch: aarch64
+          - platform: macos-latest
+            arch: x86_64
+          - plaform: ubuntu-latest
+            arch: x86_64
+          - plaform: ubuntu-latest
+            arch: arm64
+          - platform: windows-latest
+            arch: x86_64
 
     runs-on: ${{ matrix.platform }}
     permissions: write-all
@@ -52,8 +58,34 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name }} # This only works if your workflow triggers on new tags.
-          releaseName: "App Name v__VERSION__" # tauri-action replaces \_\_VERSION\_\_ with the app version.
-          releaseBody: "See the assets to download and install this version."
-          releaseDraft: true
-          prerelease: false
+          releaseId: ${{ needs.create-release.outputs.release_id }}
+
+  publish-release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-20.04
+    needs: [create-release, build-tauri]
+
+    steps:
+      - name: move artifacts
+        run: |
+          mv ./target/release/app ./target/release/app-${{ matrix.settings.target }}${{ matrix.settings.ext }}
+      - name: upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-${{ matrix.arch }}
+          path: ./target/release/app-${{ matrix.arch }}
+      - name: publish release
+        id: publish-release
+        uses: actions/github-script@v6
+        env:
+          release_id: ${{ needs.create-release.outputs.release_id }}
+        with:
+          script: |
+            github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: process.env.release_id,
+              draft: false,
+              prerelease: false
+            })
