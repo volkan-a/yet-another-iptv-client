@@ -48,9 +48,9 @@ jobs:
             target: x86_64-pc-windows-msvc
             ext: .exe
           - host: ubuntu-20.04
-            setup: |
-              sudo apt-get update
-              sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+            target: aarch64-unknown-linux-gnu
+          - host: ubuntu-20.04
+            target: x86_64-unknown-linux-gnu
     name: ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
     steps:
@@ -62,9 +62,10 @@ jobs:
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
       - name: install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-20.04'
+        if: matrix.settings.host == 'ubuntu-20.04'
         run: |
           sudo apt-get update
+          sudo apt-get install gcc-aarch64-linux-gnu -y
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
       - name: install frontend dependencies
         run: yarn install # change this to npm or pnpm depending on which one you use
