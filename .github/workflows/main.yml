@@ -82,7 +82,13 @@ jobs:
     needs: [create-release, build-tauri]
 
     steps:
-      - uses: actions/upload-release-asset@v1
+      - name: move artifacts
+        mv ./target/release/app ./target/release/app-${{ matrix.settings.target }}${{ matrix.settings.ext }}
+      - name: upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-${{ matrix.arch }}
+          path: ./target/release/app-${{ matrix.arch }}
       - name: publish release
         id: publish-release
         uses: actions/github-script@v6
