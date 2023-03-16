@@ -19,7 +19,6 @@ import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 
 const SettingsPanel = () => {
-  const [file, setFile] = useState<File | null>();
   const [opened, { open, close }] = useDisclosure(false);
   const [authenticationMessage, setAuthenticationMessage] = useState("");
   const [messageColor, setMessageColor] = useState<"red.5" | "green.5">(
@@ -30,7 +29,6 @@ const SettingsPanel = () => {
       username: store.authentication?.username || "",
       password: store.authentication?.password || "",
       url: store.authentication?.url || "",
-      vlcPath: store.vlcPath || "",
     },
 
     validate: {
@@ -48,7 +46,6 @@ const SettingsPanel = () => {
 
   const onSubmit = async (values: any) => {
     let data: any;
-    store.vlcPath = values.vlcPath;
     const url = `${values.url}/player_api.php?username=${values.username}&password=${values.password}`;
     axios
       .get(url)
