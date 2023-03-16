@@ -45,11 +45,13 @@ jobs:
         arch: [x86_64, aarch64, arm64]
         exclude:
           - platform: macos-latest
-            arch: amd64
+            arch: arm64
           - platform: ubuntu-20.04
             arch: aarch64
           - platform: windows-latest
             arch: aarch64
+          - platform: windows-latest
+            arch: arm64
 
     runs-on: ${{ matrix.platform }}
     steps:
