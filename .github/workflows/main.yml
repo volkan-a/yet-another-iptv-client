@@ -47,7 +47,7 @@ jobs:
           - platform: macos-latest
             arch: arm64
           - plaform: ubuntu-20.04
-            arch: arch64
+            arch: aarch64
           - platform: windows-latest
             arch: aarch64
 
