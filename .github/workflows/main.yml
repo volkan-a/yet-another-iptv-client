@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  permissions: write-all
   release:
     strategy:
       fail-fast: false
@@ -17,6 +16,7 @@ jobs:
             arch: aarch64
 
     runs-on: ${{ matrix.platform }}
+    permissions: write-all
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
