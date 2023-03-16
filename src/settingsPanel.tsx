@@ -2,7 +2,6 @@ import {
   Button,
   Center,
   FileButton,
-  FileInput,
   Group,
   Modal,
   Paper,
@@ -82,7 +81,6 @@ const SettingsPanel = () => {
       username: "",
       password: "",
       url: "",
-      // vlcPath: "",
     });
   };
 
@@ -127,18 +125,6 @@ const SettingsPanel = () => {
                 {...form.getInputProps("url")}
                 mb="sm"
               />
-              <FileButton onChange={setFile}>
-                {(props) => (
-                  <TextInput
-                    label="VLC yolu"
-                    mb="sm"
-                    readOnly
-                    value={file?.name || ""}
-                    {...props}
-                  />
-                )}
-              </FileButton>
-
               <Center mb="sm">
                 <PinInput
                   size="xl"
