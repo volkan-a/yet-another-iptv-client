@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  permission: write-all
   release:
     strategy:
       fail-fast: false
