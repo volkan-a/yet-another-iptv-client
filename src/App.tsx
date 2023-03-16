@@ -1,5 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
-import axios from "axios";
+import { ReactNode, useState } from "react";
 import {
   AppShell,
   Footer,
