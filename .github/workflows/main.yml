@@ -1,4 +1,4 @@
-name: Release
+name: 'Release'
 on:
   push:
     tags:
@@ -13,10 +13,12 @@ jobs:
         include:
           - platform: macos-latest
             arch: aarch64
+          - platform: macos-latest
             arch: x86_64
           - plaform: ubuntu-latest
             arch: x86_64
-            arch: aarch64
+          - plaform: ubuntu-latest
+            arch: arm64
           - platform: windows-latest
             arch: x86_64
           
