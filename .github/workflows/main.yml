@@ -31,11 +31,14 @@ jobs:
         with:
           node-version: "14.x"
 
+      # - name: install Rust stable
+      #   uses: dtolnay/rust-toolchain@stable
+
       - name: Install Rust stable toolchain with cargo-generate and wasm-pack components
         uses: actions-rs/toolchain@v1.0.7
         with:
           toolchain: stable
-          components: cargo-generate
+          # components: cargo-generate
 
       - name: Install dependencies
         run: npm ci
