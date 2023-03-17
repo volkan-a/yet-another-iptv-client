@@ -1,6 +1,9 @@
 name: "publish"
 
-on: pull_request
+on:
+  push:
+    branches:
+      - release # trigger when release branch is pushed
 
 jobs:
   create-release:
