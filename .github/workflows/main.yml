@@ -20,7 +20,7 @@ jobs:
           - platform: windows-latest
             target: x86_64-pc-windows-msvc # target for windows x86_64 binary
           - platform: macos-latest
-            target: universal # target for macos universal binary
+            target: universal-apple-darwin # target for macos universal binary
 
     steps:
       - name: Checkout repository
