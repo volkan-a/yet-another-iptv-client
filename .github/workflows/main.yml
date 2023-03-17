@@ -77,7 +77,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: --target ${matrix.target}
+          # args: --target ${matrix.target}
           releaseId: ${{ needs.create-release.outputs.release_id }}
 
   publish-release:
