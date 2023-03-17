@@ -23,18 +23,18 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.4.0
 
       - name: Install Node.js
-        uses: actions/setup-node@v2.4.0
+        uses: actions/setup-node@v3.6.0
         with:
-          node-version: "lts/*"
+          node-version: 16
 
       # - name: install Rust stable
       #   uses: dtolnay/rust-toolchain@stable
 
       - name: Install Rust stable toolchain with cargo-generate and wasm-pack components
-        uses: actions-rs/toolchain@v1.0.7
+        uses: actions-rs/toolchain@v1.0.6
         with:
           toolchain: stable
           # components: cargo-generate
@@ -62,7 +62,7 @@ jobs:
         run: yarn run build
 
       - name: Use Tauri Action
-        uses: tauri-apps/tauri-action@v0.1.3 # use latest version of Tauri Action
+        uses: tauri-apps/tauri-action@v0.2.0 # use latest version of Tauri Action
         with:
           args: --target ${{ matrix.target }} # pass arguments to tauri-cli
 
